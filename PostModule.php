@@ -21,15 +21,51 @@ class PostModule extends \yii\base\Module
      */
     const VERSION = '0.1.0';
 
-    /**
-     * Table aliases
-     *
-     * @var string
-     */
-    public $post_table          = '{{%post}}';
     public $controllerNamespace = 'yeesoft\post\controllers';
     public $viewList;
     public $layoutList;
+    
+    /**
+     * Post model class
+     *
+     * @var string
+     */
+    public $postModelClass = 'yeesoft\post\models\Post';
+    
+    /**
+     * Post search model class
+     *
+     * @var string
+     */
+    public $postModelSearchClass = 'yeesoft\post\models\search\PostSearch';
+    
+    /**
+     * Index page view
+     *
+     * @var string
+     */
+    public $indexView = 'index';
+    
+    /**
+     * View page view
+     *
+     * @var string
+     */
+    public $viewView = 'view';
+    
+    /**
+     * Create page view
+     *
+     * @var string
+     */
+    public $createView = 'create';
+    
+    /**
+     * Update page view
+     *
+     * @var string
+     */
+    public $updateView = 'update';
 
     /**
      * Size of thumbnail image of the post.
