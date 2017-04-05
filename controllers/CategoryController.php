@@ -9,9 +9,21 @@ use yeesoft\controllers\admin\BaseController;
  */
 class CategoryController extends BaseController
 {
-    public $modelClass = 'yeesoft\post\models\Category';
-    public $modelSearchClass = 'yeesoft\post\models\search\CategorySearch';
+
     public $disabledActions = ['view', 'bulk-activate', 'bulk-deactivate'];
+
+    public function init()
+    {
+        $this->modelClass = $this->module->categoryModelClass;
+        $this->modelSearchClass = $this->module->categoryModelSearchClass;
+
+        $this->indexView = $this->module->categoryIndexView;
+        $this->viewView = $this->module->categoryViewView;
+        $this->createView = $this->module->categoryCreateView;
+        $this->updateView = $this->module->categoryUpdateView;
+
+        parent::init();
+    }
 
     protected function getRedirectPage($action, $model = null)
     {
@@ -26,4 +38,5 @@ class CategoryController extends BaseController
                 return parent::getRedirectPage($action, $model);
         }
     }
+
 }

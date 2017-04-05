@@ -11,9 +11,6 @@ use yeesoft\models\User;
 class DefaultController extends BaseController
 {
 
-    public $modelClass;
-    public $modelSearchClass;
-
     public function init()
     {
         $this->modelClass = $this->module->postModelClass;

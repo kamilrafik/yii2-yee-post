@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel panel-default">
         <div class="panel-body">
 
-            <?= Html::a(Yii::t('yee', 'Edit'), ['/post/default/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+            <?= Html::a(Yii::t('yee', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
 
-            <?= Html::a(Yii::t('yee', 'Delete'), ['/post/default/delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('yee', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-sm btn-default',
                 'data' => [
                     'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
 
-            <?= Html::a(Yii::t('yee', 'Add New'), ['/post/default/create'], ['class' => 'btn btn-sm btn-primary pull-right']) ?>
+            <?= Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary pull-right']) ?>
 
         </div>
     </div>

@@ -141,7 +141,7 @@ class Tag extends ActiveRecord implements OwnerAccess
     public static function getTags()
     {
         $result = [];
-        $tags = self::find()->all();
+        $tags = static::find()->all();
         foreach ($tags as $tag) {
             $result[] = ['id' => $tag->id, 'name' => $tag->title];
         }

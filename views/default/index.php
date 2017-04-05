@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-sm-12">
             <h3 class="lte-hide-title page-title"><?= Html::encode($this->title) ?></h3>
-            <?= Html::a(Yii::t('yee', 'Add New'), ['/post/default/create'], ['class' => 'btn btn-sm btn-primary']) ?>
+            <?= Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']) ?>
             <?= Html::a(Yii::t('yee/media', 'Categories'), ['/post/category/index'], ['class' => 'btn btn-sm btn-primary']) ?>
         </div>
     </div>
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'yeesoft\grid\columns\TitleActionColumn',
                         'controller' => '/post/default',
                         'title' => function (Post $model) {
-                            return Html::a($model->title, ['/post/default/view', 'id' => $model->id], ['data-pjax' => 0]);
+                            return Html::a($model->title, ['view', 'id' => $model->id], ['data-pjax' => 0]);
                         },
                     ],
                     [

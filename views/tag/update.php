@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model yeesoft\post\models\Tag */
 
 $this->title = Yii::t('yee/media', 'Update Tag');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['/post/default/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Tags'), 'url' => ['/post/tag/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['default/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Tags'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('yee', 'Update');
 ?>
 <div class="post-tag-update">

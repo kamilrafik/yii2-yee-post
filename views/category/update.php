@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model yeesoft\post\models\Category */
 
 $this->title = Yii::t('yee/media', 'Update Category');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['/post/default/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Categories'), 'url' => ['/post/category/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['default/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('yee', 'Update');
 ?>
 <div class="post-category-update">

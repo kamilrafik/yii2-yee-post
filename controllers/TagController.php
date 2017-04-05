@@ -9,9 +9,21 @@ use yeesoft\controllers\admin\BaseController;
  */
 class TagController extends BaseController
 {
-    public $modelClass = 'yeesoft\post\models\Tag';
-    public $modelSearchClass = 'yeesoft\post\models\search\TagSearch';
+
     public $disabledActions = ['view', 'bulk-activate', 'bulk-deactivate'];
+
+    public function init()
+    {
+        $this->modelClass = $this->module->tagModelClass;
+        $this->modelSearchClass = $this->module->tagModelSearchClass;
+
+        $this->indexView = $this->module->tagIndexView;
+        $this->viewView = $this->module->tagViewView;
+        $this->createView = $this->module->tagCreateView;
+        $this->updateView = $this->module->tagUpdateView;
+
+        parent::init();
+    }
 
     protected function getRedirectPage($action, $model = null)
     {
@@ -26,4 +38,5 @@ class TagController extends BaseController
                 return parent::getRedirectPage($action, $model);
         }
     }
+
 }

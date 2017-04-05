@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yee-soft.com/
  * @copyright Copyright (c) 2015 Taras Makitra
@@ -16,6 +17,7 @@ use Yii;
  */
 class PostModule extends \yii\base\Module
 {
+
     /**
      * Version number of the module.
      */
@@ -24,48 +26,132 @@ class PostModule extends \yii\base\Module
     public $controllerNamespace = 'yeesoft\post\controllers';
     public $viewList;
     public $layoutList;
-    
+
     /**
      * Post model class
      *
      * @var string
      */
     public $postModelClass = 'yeesoft\post\models\Post';
-    
+
     /**
      * Post search model class
      *
      * @var string
      */
     public $postModelSearchClass = 'yeesoft\post\models\search\PostSearch';
-    
+
     /**
      * Index page view
      *
      * @var string
      */
     public $indexView = 'index';
-    
+
     /**
      * View page view
      *
      * @var string
      */
     public $viewView = 'view';
-    
+
     /**
      * Create page view
      *
      * @var string
      */
     public $createView = 'create';
-    
+
     /**
      * Update page view
      *
      * @var string
      */
     public $updateView = 'update';
+
+    /**
+     * Tag model class
+     *
+     * @var string
+     */
+    public $tagModelClass = 'yeesoft\post\models\Tag';
+
+    /**
+     * Tag search model class
+     *
+     * @var string
+     */
+    public $tagModelSearchClass = 'yeesoft\post\models\search\TagSearch';
+
+    /**
+     * Index tag view
+     *
+     * @var string
+     */
+    public $tagIndexView = 'index';
+
+    /**
+     * View tag view
+     *
+     * @var string
+     */
+    public $tagViewView = 'view';
+
+    /**
+     * Create tag view
+     *
+     * @var string
+     */
+    public $tagCreateView = 'create';
+
+    /**
+     * Update tag view
+     *
+     * @var string
+     */
+    public $tagUpdateView = 'update';
+
+    /**
+     * Category model class
+     *
+     * @var string
+     */
+    public $categoryModelClass = 'yeesoft\post\models\Category';
+
+    /**
+     * Category search model class
+     *
+     * @var string
+     */
+    public $categoryModelSearchClass = 'yeesoft\post\models\search\CategorySearch';
+
+    /**
+     * Index category view
+     *
+     * @var string
+     */
+    public $categoryIndexView = 'index';
+
+    /**
+     * View category view
+     *
+     * @var string
+     */
+    public $categoryViewView = 'view';
+
+    /**
+     * Create category view
+     *
+     * @var string
+     */
+    public $categoryCreateView = 'create';
+
+    /**
+     * Update category view
+     *
+     * @var string
+     */
+    public $categoryUpdateView = 'update';
 
     /**
      * Size of thumbnail image of the post.
@@ -75,7 +161,7 @@ class PostModule extends \yii\base\Module
      *
      * @var string
      */
-    public $thumbnailSize =  'medium';
+    public $thumbnailSize = 'medium';
 
     /**
      * Default views and layouts
@@ -97,7 +183,7 @@ class PostModule extends \yii\base\Module
      */
     public function init()
     {
-        if(in_array($this->thumbnailSize, [])){
+        if (in_array($this->thumbnailSize, [])) {
             $this->thumbnailSize = 'medium';
         }
 
@@ -115,4 +201,5 @@ class PostModule extends \yii\base\Module
 
         parent::init();
     }
+
 }
