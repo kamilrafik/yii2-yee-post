@@ -7,7 +7,7 @@ use yeesoft\models\User;
 use yeesoft\dashboard\widgets\DashboardWidget;
 use Yii;
 
-class PostsWidget extends DashboardWidget
+class PostWidget extends DashboardWidget
 {
 
     /**
