@@ -4,8 +4,6 @@ namespace yeesoft\post\widgets\dashboard;
 
 use yeesoft\helpers\FA;
 use yeesoft\models\User;
-use yeesoft\post\models\Post;
-use yeesoft\post\models\search\PostSearch;
 use yeesoft\dashboard\widgets\DashboardWidget;
 use Yii;
 
@@ -13,21 +11,39 @@ class PostsWidget extends DashboardWidget
 {
 
     /**
-     * Most recent post limit
+     * @var integer most recent post limit 
      */
     public $limit = 5;
 
     /**
-     * Post index action
+     * @var string model class name
+     */
+    public $modelClass = 'yeesoft\post\models\Post';
+
+    /**
+     * @var string search model class name
+     */
+    public $searchModelClass = 'yeesoft\post\models\search\PostSearch';
+
+    /**
+     * @var string index action
      */
     public $indexAction = '/post/default/index';
 
     /**
-     * Total post options
-     *
-     * @var array
+     * @var string list view file
      */
-    public $quickLinkOptions;
+    public $indexView = 'index';
+
+    /**
+     * @var string list view file
+     */
+    public $quickLinksView = 'quick-links';
+
+    /**
+     * @var array total post options
+     */
+    public $quickLinksOptions;
 
     public function init()
     {
@@ -39,36 +55,39 @@ class PostsWidget extends DashboardWidget
 
     public function renderContent()
     {
-        $posts = Post::find()->orderBy(['id' => SORT_DESC])->limit($this->limit)->all();
-        return $this->render('posts', compact('posts'));
+        $modelClass = $this->modelClass;
+        $items = $modelClass::find()->orderBy(['id' => SORT_DESC])->limit($this->limit)->all();
+        return $this->render($this->indexView, compact('items'));
     }
 
     public function renderFooterContent()
     {
-        if (!$this->quickLinkOptions) {
-            $this->quickLinkOptions = $this->getDefaultQuickLinkOptions();
+        if (!$this->quickLinksOptions) {
+            $this->quickLinksOptions = $this->getDefaultQuickLinksOptions();
         }
 
         $links = [];
-        $searchModel = new PostSearch();
-        $formName = $searchModel->formName();
+        $modelClass = $this->modelClass;
+        $searchModelClass = $this->searchModelClass;
+        $formName = (new $searchModelClass())->formName();
 
-        foreach ($this->quickLinkOptions as $option) {
+        foreach ($this->quickLinksOptions as $option) {
             $links[] = [
-                'count' => Post::find()->filterWhere($option['filter'])->count(),
+                'count' => $modelClass::find()->filterWhere($option['filter'])->count(),
                 'label' => $option['label'],
                 'url' => [$this->indexAction, $formName => $option['filter']],
             ];
         }
 
-        return $this->render('links', compact('links'));
+        return $this->render($this->quickLinksView, compact('links'));
     }
 
-    public function getDefaultQuickLinkOptions()
+    public function getDefaultQuickLinksOptions()
     {
+        $modelClass = $this->modelClass;
         return [
-                ['label' => Yii::t('yee', 'Published'), 'filter' => ['status' => Post::STATUS_PUBLISHED]],
-                ['label' => Yii::t('yee', 'Pending'), 'filter' => ['status' => Post::STATUS_PENDING]],
+                ['label' => Yii::t('yee', 'Published'), 'filter' => ['status' => $modelClass::STATUS_PUBLISHED]],
+                ['label' => Yii::t('yee', 'Pending'), 'filter' => ['status' => $modelClass::STATUS_PENDING]],
         ];
     }
 
