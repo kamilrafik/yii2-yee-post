@@ -48,8 +48,6 @@ class PostWidget extends DashboardWidget
     public function init()
     {
         parent::init();
-        $this->icon = FA::_PENCIL;
-        $this->title = Yii::t('yee/post', 'Posts Activity');
         $this->visible = User::hasPermission('viewPosts');
     }
 
@@ -86,9 +84,19 @@ class PostWidget extends DashboardWidget
     {
         $modelClass = $this->modelClass;
         return [
-                ['label' => Yii::t('yee', 'Published'), 'filter' => ['status' => $modelClass::STATUS_PUBLISHED]],
-                ['label' => Yii::t('yee', 'Pending'), 'filter' => ['status' => $modelClass::STATUS_PENDING]],
+            ['label' => Yii::t('yee', 'Published'), 'filter' => ['status' => $modelClass::STATUS_PUBLISHED]],
+            ['label' => Yii::t('yee', 'Pending'), 'filter' => ['status' => $modelClass::STATUS_PENDING]],
         ];
+    }
+
+    public function getIcon()
+    {
+        return FA::_PENCIL;
+    }
+
+    public function getTitle()
+    {
+        return Yii::t('yee/post', 'Posts Activity');
     }
 
 }
