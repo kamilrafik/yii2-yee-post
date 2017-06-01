@@ -73,8 +73,7 @@ class Category extends ActiveRecord implements OwnerAccess
             ],
             'multilingual' => [
                 'class' => MultilingualBehavior::className(),
-                'langForeignKey' => 'post_category_id',
-                'tableName' => "{{%post_category_lang}}",
+                'languageForeignKey' => 'post_category_id',
                 'attributes' => [
                     'title', 'description',
                 ]

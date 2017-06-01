@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $model yeesoft\post\models\Tag */
 
@@ -10,7 +8,5 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Tags'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('yee', 'Update');
 ?>
-<div class="post-tag-update">
-    <h3 class="lte-hide-title"><?= Html::encode($this->title) ?></h3>
-    <?= $this->render('_form', compact('model')) ?>
-</div>
+
+<?= $this->render('_form', compact('model')) ?>

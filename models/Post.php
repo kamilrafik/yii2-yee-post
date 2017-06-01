@@ -2,15 +2,16 @@
 
 namespace yeesoft\post\models;
 
-use yeesoft\behaviors\MultilingualBehavior;
-use yeesoft\models\OwnerAccess;
-use yeesoft\models\User;
 use Yii;
+use yii\helpers\Html;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yeesoft\models\User;
 use yeesoft\db\ActiveRecord;
-use yii\helpers\Html;
+use yeesoft\models\OwnerAccess;
+use yeesoft\behaviors\MultilingualBehavior;
+use yeesoft\multilingual\db\MultilingualLabelsTrait;
 
 /**
  * This is the model class for table "post".
@@ -38,6 +39,8 @@ use yii\helpers\Html;
  */
 class Post extends ActiveRecord implements OwnerAccess
 {
+
+    use MultilingualLabelsTrait;
 
     const STATUS_PENDING = 0;
     const STATUS_PUBLISHED = 1;
@@ -82,8 +85,7 @@ class Post extends ActiveRecord implements OwnerAccess
             ],
             'multilingual' => [
                 'class' => MultilingualBehavior::className(),
-                'langForeignKey' => 'post_id',
-                'tableName' => "{{%post_lang}}",
+                'languageForeignKey' => 'post_id',
                 'attributes' => [
                     'title', 'content',
                 ]
@@ -131,6 +133,9 @@ class Post extends ActiveRecord implements OwnerAccess
             'updated_at' => Yii::t('yee', 'Updated'),
             'revision' => Yii::t('yee', 'Revision'),
             'tagValues' => Yii::t('yee', 'Tags'),
+            'updatedByName' => Yii::t('yee', 'Updated By'),
+            'createdDatetime' => Yii::t('yee', 'Created'),
+            'updatedDatetime' => Yii::t('yee', 'Updated'),
         ];
     }
 
@@ -171,7 +176,7 @@ class Post extends ActiveRecord implements OwnerAccess
     public function getTags()
     {
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
-                    ->viaTable('{{%post_tag_post}}', ['post_id' => 'id']);
+                        ->viaTable('{{%post_tag_post}}', ['post_id' => 'id']);
     }
 
     /**
@@ -205,6 +210,11 @@ class Post extends ActiveRecord implements OwnerAccess
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
+    public function getUpdatedByName()
+    {
+        return $this->updatedBy->username;
+    }
+    
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);

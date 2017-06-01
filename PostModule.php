@@ -39,7 +39,7 @@ class PostModule extends \yii\base\Module
      *
      * @var string
      */
-    public $postModelSearchClass = 'yeesoft\post\models\search\PostSearch';
+    public $postModelSearchClass = 'yeesoft\post\models\PostSearch';
 
     /**
      * Index page view
@@ -81,7 +81,7 @@ class PostModule extends \yii\base\Module
      *
      * @var string
      */
-    public $tagModelSearchClass = 'yeesoft\post\models\search\TagSearch';
+    public $tagModelSearchClass = 'yeesoft\post\models\TagSearch';
 
     /**
      * Index tag view
@@ -123,7 +123,7 @@ class PostModule extends \yii\base\Module
      *
      * @var string
      */
-    public $categoryModelSearchClass = 'yeesoft\post\models\search\CategorySearch';
+    public $categoryModelSearchClass = 'yeesoft\post\models\CategorySearch';
 
     /**
      * Index category view

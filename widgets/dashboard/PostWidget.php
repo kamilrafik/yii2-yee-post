@@ -23,7 +23,7 @@ class PostWidget extends DashboardWidget
     /**
      * @var string search model class name
      */
-    public $searchModelClass = 'yeesoft\post\models\search\PostSearch';
+    public $searchModelClass = 'yeesoft\post\models\PostSearch';
 
     /**
      * @var string index action

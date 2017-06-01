@@ -1,64 +1,47 @@
 <?php
 
-use yeesoft\grid\GridPageSize;
-use yeesoft\grid\GridView;
-use yeesoft\helpers\Html;
-use yeesoft\post\models\Tag;
-use yii\helpers\Url;
 use yii\widgets\Pjax;
+use yeesoft\helpers\Html;
+use yeesoft\grid\GridView;
+use yeesoft\post\models\Tag;
 
 /* @var $this yii\web\View */
-/* @var $searchModel yeesoft\post\search\TagSearch */
+/* @var $searchModel yeesoft\post\TagSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('yee/media', 'Tags');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['default/index']];
 $this->params['breadcrumbs'][] = $this->title;
-
+$this->params['description'] = 'List of post tags';
+$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']);
 ?>
-<div class="post-tag-index">
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h3 class="lte-hide-title page-title"><?= Html::encode($this->title) ?></h3>
-            <?= Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']) ?>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-body">
-
-            <div class="row">
-                <div class="col-sm-12 text-right">
-                    <?= GridPageSize::widget(['pjaxId' => 'post-tag-grid-pjax']) ?>
-                </div>
-            </div>
-
-            <?php Pjax::begin(['id' => 'post-tag-grid-pjax']) ?>
-
-            <?= GridView::widget([
-                'id' => 'post-tag-grid',
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'bulkActionOptions' => [
-                    'gridId' => 'post-tag-grid',
-                    'actions' => [Url::to(['bulk-delete']) => Yii::t('yee', 'Delete')]
+<div class="box box-primary">
+    <div class="box-body">
+        <?php $pjax = Pjax::begin() ?>
+        <?=
+        GridView::widget([
+            'pjaxId' => $pjax->id,
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'quickFilters' => false,
+            'columns' => [
+                ['class' => 'yeesoft\grid\CheckboxColumn', 'options' => ['style' => 'width:10px'], 'displayFilter' => false],
+                [
+                    'class' => 'yeesoft\grid\columns\TitleActionColumn',
+                    'title' => function (Tag $model) {
+                        return Html::a($model->title, ['update', 'id' => $model->id], ['data-pjax' => 0]);
+                    },
+                    'buttonsTemplate' => '{update} {delete}',
+                    'filterOptions' => ['colspan' => 2],
                 ],
-                'columns' => [
-                    ['class' => 'yeesoft\grid\CheckboxColumn', 'options' => ['style' => 'width:10px']],
-                    [
-                        'class' => 'yeesoft\grid\columns\TitleActionColumn',
-                        'controller' => '/post/tag',
-                        'title' => function (Tag $model) {
-                            return Html::a($model->title, ['update', 'id' => $model->id], ['data-pjax' => 0]);
-                        },
-                        'buttonsTemplate' => '{update} {delete}',
-                    ],
-                    'slug',
+                [
+                    'attribute' => 'slug',
+                    'options' => ['style' => 'width:50%'],
                 ],
-            ]); ?>
-
-            <?php Pjax::end() ?>
-        </div>
+            ],
+        ]);
+        ?>
+        <?php Pjax::end() ?>
     </div>
 </div>

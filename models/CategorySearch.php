@@ -1,19 +1,16 @@
 <?php
 
-namespace yeesoft\post\models\search;
+namespace yeesoft\post\models;
 
-use yeesoft\post\models\Post;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * PostSearch represents the model behind the search form about `common\models\Post`.
+ * CategorySearch represents the model behind the search form about `yeesoft\post\models\Category`.
  */
-class PostSearch extends Post
+class CategorySearch extends Category
 {
-
-    public $published_at_operand;
 
     /**
      * @inheritdoc
@@ -21,9 +18,17 @@ class PostSearch extends Post
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by', 'status', 'comment_status', 'revision'], 'integer'],
-            [['published_at_operand', 'slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'visible', 'created_by', 'updated_by', 'parent_id'], 'integer'],
+            [['slug', 'title', 'description', 'created_at', 'updated_at'], 'safe'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function formName()
+    {
+        return '';
     }
 
     /**
@@ -44,7 +49,7 @@ class PostSearch extends Post
      */
     public function search($params)
     {
-        $query = Post::find()->joinWith('translations');
+        $query = Category::find()->joinWith('translations');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -66,20 +71,22 @@ class PostSearch extends Post
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'visible' => $this->visible,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'status' => $this->status,
-            'comment_status' => $this->comment_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'revision' => $this->revision,
         ]);
 
-        $query->andFilterWhere([($this->published_at_operand) ? $this->published_at_operand : '=', 'published_at', ($this->published_at) ? strtotime($this->published_at) : null]);
+        if (isset($this->parent_id) && $this->parent_id > 1) {
+            $parent = Category::findOne((int) $this->parent_id);
+            $query->andWhere(['>', 'left_border', $parent->left_border]);
+            $query->andWhere(['<', 'right_border', $parent->right_border]);
+        }
 
         $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content]);
+                ->andFilterWhere(['like', 'title', $this->title])
+                ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

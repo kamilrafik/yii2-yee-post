@@ -1,26 +1,36 @@
 <?php
 
-namespace yeesoft\post\models\search;
+namespace yeesoft\post\models;
 
-use yeesoft\post\models\Tag;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * TagSearch represents the model behind the search form about `yeesoft\post\models\Tag`.
+ * PostSearch represents the model behind the search form about `common\models\Post`.
  */
-class TagSearch extends Tag
+class PostSearch extends Post
 {
+
+    public $published_at_operand;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by'], 'integer'],
-            [['slug', 'title', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'created_by', 'updated_by', 'status', 'comment_status', 'revision'], 'integer'],
+            [['published_at_operand', 'slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function formName()
+    {
+        return '';
     }
 
     /**
@@ -41,7 +51,7 @@ class TagSearch extends Tag
      */
     public function search($params)
     {
-        $query = Tag::find()->joinWith('translations');
+        $query = Post::find()->joinWith('translations');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -65,13 +75,20 @@ class TagSearch extends Tag
             'id' => $this->id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
+            'status' => $this->status,
+            'comment_status' => $this->comment_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'revision' => $this->revision,
         ]);
 
+        $query->andFilterWhere([($this->published_at_operand) ? $this->published_at_operand : '=', 'published_at', ($this->published_at) ? strtotime($this->published_at) : null]);
+
         $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'title', $this->title]);
+                ->andFilterWhere(['like', 'title', $this->title])
+                ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }
+
 }

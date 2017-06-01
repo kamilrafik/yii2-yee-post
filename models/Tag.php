@@ -53,8 +53,7 @@ class Tag extends ActiveRecord implements OwnerAccess
             ],
             'multilingual' => [
                 'class' => MultilingualBehavior::className(),
-                'langForeignKey' => 'post_tag_id',
-                'tableName' => "{{%post_tag_lang}}",
+                'languageForeignKey' => 'post_tag_id',
                 'attributes' => [
                     'title'
                 ]
