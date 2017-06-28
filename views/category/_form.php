@@ -36,9 +36,10 @@ use yeesoft\post\models\Category;
             <div class="box-body">
 
                 <div class="row">
-
-                    <?= $form->field($model, 'visible')->checkbox() ?>
-
+                    <div class="col-md-12">
+                        <?= $form->field($model, 'visible')->checkbox() ?>
+                    </div>
+                    
                     <?php if ($model->isNewRecord): ?>
                         <div class="col-md-6">
                             <?= Html::submitButton(Yii::t('yee', 'Create'), ['class' => 'btn btn-primary btn-block']) ?>

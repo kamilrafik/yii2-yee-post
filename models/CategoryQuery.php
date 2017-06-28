@@ -2,7 +2,7 @@
 
 namespace yeesoft\post\models;
 
-use omgdef\multilingual\MultilingualTrait;
+use yeesoft\multilingual\db\MultilingualTrait;
 use paulzi\nestedintervals\NestedIntervalsQueryTrait;
 
 
@@ -16,7 +16,6 @@ class CategoryQuery extends \yii\db\ActiveQuery
 
     use MultilingualTrait;
     use NestedIntervalsQueryTrait;
-
 
     /**
      * @inheritdoc

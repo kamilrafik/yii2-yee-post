@@ -14,8 +14,8 @@ use yeesoft\post\models\Post;
 $this->title = Yii::t('yee/post', 'Posts');
 $this->params['description'] = 'list of posts';
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['/post/default/create'], ['class' => 'btn btn-sm btn-primary'])
-        . Html::a(Yii::t('yee/media', 'Categories'), ['/post/category/index'], ['class' => 'btn btn-sm btn-primary']);
+$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary'])
+        . Html::a(Yii::t('yee/media', 'Categories'), ['category/index'], ['class' => 'btn btn-sm btn-primary']);
 ?>
 
 <div class="box box-primary">

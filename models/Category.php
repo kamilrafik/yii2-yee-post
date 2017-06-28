@@ -139,7 +139,7 @@ class Category extends ActiveRecord implements OwnerAccess
         try {
             return parent::save($runValidation, $attributeNames);
         } catch (yii\base\Exception $exc) {
-            \Yii::$app->session->setFlash('crudMessage', $exc->getMessage());
+            \Yii::$app->session->setFlash('error', $exc->getMessage());
         }
 
     }
