@@ -2,12 +2,12 @@
 
 namespace yeesoft\post\controllers;
 
-use yeesoft\controllers\admin\BaseController;
+use yeesoft\controllers\CrudController;
 
 /**
  * CategoryController implements the CRUD actions for yeesoft\post\models\Category model.
  */
-class CategoryController extends BaseController
+class CategoryController extends CrudController
 {
 
     public $disabledActions = ['view', 'bulk-activate', 'bulk-deactivate'];

@@ -2,13 +2,13 @@
 
 namespace yeesoft\post\controllers;
 
-use yeesoft\controllers\admin\BaseController;
+use yeesoft\controllers\CrudController;
 use yeesoft\models\User;
 
 /**
  * PostController implements the CRUD actions for Post model.
  */
-class DefaultController extends BaseController
+class DefaultController extends CrudController
 {
 
     public function init()

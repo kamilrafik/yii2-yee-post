@@ -2,12 +2,12 @@
 
 namespace yeesoft\post\controllers;
 
-use yeesoft\controllers\admin\BaseController;
+use yeesoft\controllers\CrudController;
 
 /**
  * TagController implements the CRUD actions for yeesoft\post\models\Tag model.
  */
-class TagController extends BaseController
+class TagController extends CrudController
 {
 
     public $disabledActions = ['view', 'bulk-activate', 'bulk-deactivate'];

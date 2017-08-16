@@ -2,14 +2,15 @@
 
 namespace yeesoft\post\models;
 
-use paulzi\nestedintervals\NestedIntervalsBehavior;
-use yeesoft\behaviors\MultilingualBehavior;
-use yeesoft\models\OwnerAccess;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yeesoft\db\ActiveRecord;
+use yeesoft\models\OwnerAccess;
+use yeesoft\behaviors\MultilingualBehavior;
+use yeesoft\multilingual\db\MultilingualLabelsTrait;
+use paulzi\nestedintervals\NestedIntervalsBehavior;
 
 /**
  * This is the model class for table "post_category".
@@ -26,6 +27,8 @@ use yeesoft\db\ActiveRecord;
  */
 class Category extends ActiveRecord implements OwnerAccess
 {
+
+    use MultilingualLabelsTrait;
 
     public $parent_id;
 
@@ -56,6 +59,7 @@ class Category extends ActiveRecord implements OwnerAccess
             [['created_by', 'updated_by', 'created_at', 'updated_at', 'visible', 'parent_id'], 'integer'],
             [['description'], 'string'],
             [['slug', 'title'], 'string', 'max' => 255],
+            [['slug'], 'unique'],
         ];
     }
 
@@ -70,6 +74,7 @@ class Category extends ActiveRecord implements OwnerAccess
             'sluggable' => [
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'title',
+                'ensureUnique' => true,
             ],
             'multilingual' => [
                 'class' => MultilingualBehavior::className(),
@@ -105,6 +110,7 @@ class Category extends ActiveRecord implements OwnerAccess
             'slug' => Yii::t('yee', 'Slug'),
             'title' => Yii::t('yee', 'Title'),
             'visible' => Yii::t('yee', 'Visible'),
+            'parent_id' => Yii::t('yee', 'Parent Category'),
             'description' => Yii::t('yee', 'Description'),
             'created_by' => Yii::t('yee', 'Created By'),
             'updated_by' => Yii::t('yee', 'Updated By'),
@@ -122,7 +128,7 @@ class Category extends ActiveRecord implements OwnerAccess
         $parent = null;
 
         if (isset($this->parent_id) && $this->parent_id) {
-            $parent = Category::findOne((int)$this->parent_id);
+            $parent = Category::findOne((int) $this->parent_id);
         }
 
         if (!$parent) {
@@ -133,7 +139,6 @@ class Category extends ActiveRecord implements OwnerAccess
             throw new \yii\base\InvalidParamException();
         }
 
-
         $this->appendTo($parent);
 
         try {
@@ -141,7 +146,6 @@ class Category extends ActiveRecord implements OwnerAccess
         } catch (yii\base\Exception $exc) {
             \Yii::$app->session->setFlash('error', $exc->getMessage());
         }
-
     }
 
     /**
@@ -173,11 +177,9 @@ class Category extends ActiveRecord implements OwnerAccess
         return $result;
     }
 
-
     public static function find()
     {
         return new CategoryQuery(get_called_class());
-
     }
 
     /**
@@ -197,4 +199,5 @@ class Category extends ActiveRecord implements OwnerAccess
     {
         return 'created_by';
     }
+
 }

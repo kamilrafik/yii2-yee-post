@@ -48,12 +48,16 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], 
                     'format' => 'raw',
                     'filter' => Category::getCategories(),
                     'filterInputOptions' => ['class' => 'form-control', 'encodeSpaces' => true],
+                    'options' => ['style' => 'width:30%'],
                 ],
-                'description:ntext',
+                [
+                    'attribute' => 'description',
+                    'options' => ['style' => 'width:30%'],
+                ],
                 [
                     'class' => 'yeesoft\grid\columns\StatusColumn',
                     'attribute' => 'visible',
-                    'options' => ['style' => 'width:70px'],
+                    'options' => ['style' => 'width:80px'],
                 ],
             ],
         ])

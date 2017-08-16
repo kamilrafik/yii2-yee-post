@@ -82,6 +82,7 @@ class Post extends ActiveRecord implements OwnerAccess
             'sluggable' => [
                 'class' => SluggableBehavior::className(),
                 'attribute' => 'title',
+                'ensureUnique' => true,
             ],
             'multilingual' => [
                 'class' => MultilingualBehavior::className(),
@@ -107,6 +108,7 @@ class Post extends ActiveRecord implements OwnerAccess
             [['thumbnail'], 'string', 'max' => 255],
             ['published_at', 'date', 'timestampAttribute' => 'published_at', 'format' => 'yyyy-MM-dd'],
             ['published_at', 'default', 'value' => time()],
+            [['slug'], 'unique'],
         ];
     }
 

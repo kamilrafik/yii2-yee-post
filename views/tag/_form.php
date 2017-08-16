@@ -19,7 +19,7 @@ use yeesoft\widgets\ActiveForm;
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'slug')->slugInput(['maxlength' => true], 'title', '/tag/') ?>
 
             </div>
         </div>

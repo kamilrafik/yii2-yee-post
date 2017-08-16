@@ -26,7 +26,7 @@ use yeesoft\post\widgets\MagicSuggest;
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'slug')->slugInput(['maxlength' => true], 'title') ?>
 
                 <?= $form->field($model, 'tagValues')->widget(MagicSuggest::className(), ['items' => Tag::getTags()]); ?>
 

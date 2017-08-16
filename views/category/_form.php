@@ -21,9 +21,9 @@ use yeesoft\post\models\Category;
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'parent_id')->dropDownList(Category::getCategories(), ['prompt' => '', 'encodeSpaces' => true]) ?>
+                <?= $form->field($model, 'slug')->slugInput(['maxlength' => true], 'title', '/category/') ?>
 
-                <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'parent_id')->dropDownList(Category::getCategories(), ['prompt' => '', 'encodeSpaces' => true]) ?>
 
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
@@ -39,7 +39,7 @@ use yeesoft\post\models\Category;
                     <div class="col-md-12">
                         <?= $form->field($model, 'visible')->checkbox() ?>
                     </div>
-                    
+
                     <?php if ($model->isNewRecord): ?>
                         <div class="col-md-6">
                             <?= Html::submitButton(Yii::t('yee', 'Create'), ['class' => 'btn btn-primary btn-block']) ?>
