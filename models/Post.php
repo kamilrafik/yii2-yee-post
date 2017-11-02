@@ -9,7 +9,6 @@ use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yeesoft\models\User;
 use yeesoft\db\ActiveRecord;
-use yeesoft\models\OwnerAccess;
 use yeesoft\behaviors\MultilingualBehavior;
 use yeesoft\multilingual\db\MultilingualLabelsTrait;
 
@@ -37,7 +36,7 @@ use yeesoft\multilingual\db\MultilingualLabelsTrait;
  * @property PostLang[] $postLangs
  * @property Tag[] $tags
  */
-class Post extends ActiveRecord implements OwnerAccess
+class Post extends ActiveRecord
 {
 
     use MultilingualLabelsTrait;

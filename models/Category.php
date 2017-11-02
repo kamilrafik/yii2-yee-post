@@ -7,7 +7,6 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yeesoft\db\ActiveRecord;
-use yeesoft\models\OwnerAccess;
 use yeesoft\behaviors\MultilingualBehavior;
 use yeesoft\multilingual\db\MultilingualLabelsTrait;
 use paulzi\nestedintervals\NestedIntervalsBehavior;
@@ -25,7 +24,7 @@ use paulzi\nestedintervals\NestedIntervalsBehavior;
  * @property integer $created_by
  * @property integer $updated_by
  */
-class Category extends ActiveRecord implements OwnerAccess
+class Category extends ActiveRecord
 {
 
     use MultilingualLabelsTrait;
