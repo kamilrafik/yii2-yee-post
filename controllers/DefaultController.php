@@ -2,8 +2,8 @@
 
 namespace yeesoft\post\controllers;
 
+use Yii;
 use yeesoft\controllers\CrudController;
-use yeesoft\models\User;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -26,7 +26,7 @@ class DefaultController extends CrudController
 
     protected function getRedirectPage($action, $model = null)
     {
-        if (!User::hasPermission('editPosts') && $action == 'create') {
+        if (!Yii::$app->user->can('edit-posts') && $action == 'create') {
             return ['view', 'id' => $model->id];
         }
 

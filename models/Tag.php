@@ -154,22 +154,4 @@ class Tag extends ActiveRecord
         return new TagQuery(get_called_class());
     }
 
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getFullAccessPermission()
-    {
-        return 'fullPostTagAccess';
-    }
-
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getOwnerField()
-    {
-        return 'created_by';
-    }
-
 }

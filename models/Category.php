@@ -181,22 +181,4 @@ class Category extends ActiveRecord
         return new CategoryQuery(get_called_class());
     }
 
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getFullAccessPermission()
-    {
-        return 'fullPostCategoryAccess';
-    }
-
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getOwnerField()
-    {
-        return 'created_by';
-    }
-
 }

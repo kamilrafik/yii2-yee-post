@@ -48,7 +48,7 @@ class PostWidget extends DashboardWidget
     public function init()
     {
         parent::init();
-        $this->visible = User::hasPermission('viewPosts');
+        $this->visible = Yii::$app->user->can('view-posts');
     }
 
     public function renderContent()

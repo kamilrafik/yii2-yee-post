@@ -19,7 +19,7 @@ class PostInfoBox extends InfoBox
 
     public function getHasAccess()
     {
-        return User::hasPermission('viewPosts');
+        return Yii::$app->user->can('view-posts');
     }
 
     public function getTitle()

@@ -337,22 +337,4 @@ class Post extends ActiveRecord
         ];
     }
 
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getFullAccessPermission()
-    {
-        return 'fullPostAccess';
-    }
-
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getOwnerField()
-    {
-        return 'created_by';
-    }
-
 }
