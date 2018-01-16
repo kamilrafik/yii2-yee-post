@@ -7,7 +7,7 @@ use yeesoft\post\models\Tag;
 
 /* @var $this yii\web\View */
 /* @var $searchModel yeesoft\post\TagSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProvider yeesoft\data\ActiveDataProvider */
 
 $this->title = Yii::t('yee/media', 'Tags');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['default/index']];

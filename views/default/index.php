@@ -9,7 +9,7 @@ use yeesoft\post\models\Post;
 
 /* @var $this yii\web\View */
 /* @var $searchModel yeesoft\post\models\PostSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProvider yeesoft\data\ActiveDataProvider */
 
 $this->title = Yii::t('yee/post', 'Posts');
 $this->params['description'] = 'list of posts';
