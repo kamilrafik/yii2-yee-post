@@ -11,7 +11,6 @@
   "require": {
     "yeesoft/yii2-yee-core": "~0.2.0",
     "yeesoft/yii2-yee-media": "~0.2.0",
-    "paulzi/yii2-nested-intervals": "^1.0",
     "nicolasbize/magicsuggest": "~2.0"
   },
   "autoload": {

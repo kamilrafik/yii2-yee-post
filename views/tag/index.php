@@ -12,8 +12,7 @@ use yeesoft\post\models\Tag;
 $this->title = Yii::t('yee/media', 'Tags');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['default/index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['description'] = 'List of post tags';
-$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']);
+$this->params['actions'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']);
 ?>
 
 <div class="box box-primary">

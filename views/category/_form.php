@@ -23,7 +23,7 @@ use yeesoft\post\models\Category;
 
                 <?= $form->field($model, 'slug')->slugInput(['maxlength' => true], 'title', '/category/') ?>
 
-                <?= $form->field($model, 'parent_id')->dropDownList(Category::getCategories(), ['prompt' => '', 'encodeSpaces' => true]) ?>
+                <?= $form->field($model, 'parent_id')->dropDownList(Category::getCategories(), ['prompt' => Yii::t('yii', '(not set)'), 'encodeSpaces' => true]) ?>
 
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

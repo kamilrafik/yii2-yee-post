@@ -27,7 +27,7 @@ class m150630_121101_post_table extends Migration
             'updated_at' => $this->integer(),
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->createIndex('post_tag_slug', self::TAG_TABLE, 'slug');
         $this->addForeignKey('fk_post_tag_created_by', self::TAG_TABLE, 'created_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
@@ -38,7 +38,7 @@ class m150630_121101_post_table extends Migration
             'post_tag_id' => $this->integer(),
             'language' => $this->string(6)->notNull(),
             'title' => $this->string(255)->notNull(),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->createIndex('post_tag_lang_id', self::TAG_LANG_TABLE, 'post_tag_id');
         $this->createIndex('post_tag_lang_language', self::TAG_LANG_TABLE, 'language');
@@ -46,24 +46,21 @@ class m150630_121101_post_table extends Migration
 
         $this->createTable(self::POST_CATEGORY_TABLE, [
             'id' => $this->primaryKey(),
+            'parent_id' => $this->integer(),
             'slug' => $this->string(200)->notNull(),
             'visible' => $this->integer()->notNull()->defaultValue(1)->comment('0-hidden,1-visible'),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
-            'left_border' => $this->integer()->notNull(),
-            'right_border' => $this->integer()->notNull(),
-            'depth' => $this->integer()->notNull(),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->createIndex('post_category_slug', self::POST_CATEGORY_TABLE, 'slug');
         $this->createIndex('post_category_visible', self::POST_CATEGORY_TABLE, 'visible');
-        $this->createIndex('left_border', self::POST_CATEGORY_TABLE, ['left_border', 'right_border']);
-        $this->createIndex('right_border', self::POST_CATEGORY_TABLE, ['right_border']);
+        $this->addForeignKey('fk_post_category_parent_id', self::POST_CATEGORY_TABLE, 'parent_id', self::POST_CATEGORY_TABLE, 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('fk_post_category_created_by', self::POST_CATEGORY_TABLE, 'created_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('fk_post_category_updated_by', self::POST_CATEGORY_TABLE, 'updated_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
-        $this->insert(self::POST_CATEGORY_TABLE, ['id' => 1, 'slug' => 'root', 'depth' => 0, 'created_at' => time(), 'visible' => 0, 'left_border' => 0, 'right_border' => 2147483647]);
+        $this->insert(self::POST_CATEGORY_TABLE, ['id' => 1, 'slug' => 'default', 'created_at' => time(), 'visible' => 0]);
 
         $this->createTable(self::POST_CATEGORY_LANG_TABLE, [
             'id' => $this->primaryKey(),
@@ -71,7 +68,7 @@ class m150630_121101_post_table extends Migration
             'language' => $this->string(6)->notNull(),
             'title' => $this->string(255)->notNull(),
             'description' => $this->text(),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->createIndex('post_category_lang_id', self::POST_CATEGORY_LANG_TABLE, 'post_category_id');
         $this->createIndex('post_category_lang_language', self::POST_CATEGORY_LANG_TABLE, 'language');
@@ -92,7 +89,7 @@ class m150630_121101_post_table extends Migration
             'created_by' => $this->integer(),
             'updated_by' => $this->integer(),
             'revision' => $this->integer(1)->notNull()->defaultValue(1),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->createIndex('post_slug', self::POST_TABLE, 'slug');
         $this->createIndex('post_category_id', self::POST_TABLE, 'category_id');
@@ -107,7 +104,7 @@ class m150630_121101_post_table extends Migration
             'language' => $this->string(6)->notNull(),
             'title' => $this->text(),
             'content' => $this->text(),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->createIndex('post_lang_post_id', self::POST_LANG_TABLE, 'post_id');
         $this->createIndex('post_lang_language', self::POST_LANG_TABLE, 'language');
@@ -117,7 +114,7 @@ class m150630_121101_post_table extends Migration
             'id' => $this->primaryKey(),
             'post_id' => $this->integer(),
             'tag_id' => $this->integer(),
-                ], $tableOptions);
+        ], $tableOptions);
 
         $this->addForeignKey('fk_post_tag_post_id', self::TAG_POST_TABLE, 'post_id', self::POST_TABLE, 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_post_tag_tag_id', self::TAG_POST_TABLE, 'tag_id', self::TAG_TABLE, 'id', 'CASCADE', 'CASCADE');

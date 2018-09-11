@@ -79,7 +79,7 @@ use yeesoft\post\widgets\MagicSuggest;
 
         <div class="box box-primary">
             <div class="box-body">
-                <?= $form->field($model, 'category_id')->dropDownList(Category::getCategories(), ['prompt' => '', 'encodeSpaces' => true]) ?>
+                <?= $form->field($model, 'category_id')->dropDownList(Category::getCategories(), ['prompt' => Yii::t('yii', '(not set)'), 'encodeSpaces' => true]) ?>
 
                 <?= $form->field($model, 'published_at')->widget(DatePicker::className(), ['dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]) ?>
 

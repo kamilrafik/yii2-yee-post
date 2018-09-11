@@ -9,7 +9,6 @@ use yii\behaviors\TimestampBehavior;
 use yeesoft\db\ActiveRecord;
 use yeesoft\behaviors\MultilingualBehavior;
 use yeesoft\multilingual\db\MultilingualLabelsTrait;
-use paulzi\nestedintervals\NestedIntervalsBehavior;
 
 /**
  * This is the model class for table "post_category".
@@ -28,8 +27,6 @@ class Category extends ActiveRecord
 {
 
     use MultilingualLabelsTrait;
-
-    public $parent_id;
 
     /**
      * @inheritdoc
@@ -54,11 +51,13 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['created_by', 'updated_by', 'created_at', 'updated_at', 'visible', 'parent_id'], 'integer'],
-            [['description'], 'string'],
-            [['slug', 'title'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
+                [['title'], 'required'],
+                [['created_by', 'updated_by', 'created_at', 'updated_at', 'visible', 'parent_id'], 'integer'],
+                [['description'], 'string'],
+                [['slug', 'title'], 'string', 'max' => 255],
+                [['slug'], 'unique'],
+                ['parent_id', 'exist', 'targetClass' => self::class, 'targetAttribute' => ['parent_id' => 'id']],
+                ['parent_id', 'validateParent'],
         ];
     }
 
@@ -81,13 +80,6 @@ class Category extends ActiveRecord
                 'attributes' => [
                     'title', 'description',
                 ]
-            ],
-            'nestedInterval' => [
-                'class' => NestedIntervalsBehavior::className(),
-                'leftAttribute' => 'left_border',
-                'rightAttribute' => 'right_border',
-                'amountOptimize' => '25',
-                'noPrepend' => true,
             ],
         ];
     }
@@ -118,32 +110,17 @@ class Category extends ActiveRecord
         ];
     }
 
-    /**
-     *
-     * @inheritdoc
-     */
-    public function save($runValidation = true, $attributeNames = null)
+    public function validateParent($attribute, $params, $validator)
     {
-        $parent = null;
-
-        if (isset($this->parent_id) && $this->parent_id) {
-            $parent = Category::findOne((int) $this->parent_id);
+        if (isset($this->id) && $this->$attribute == $this->id) {
+            $this->addError($attribute, Yii::t('yee', 'Category cannot be the parent of itself.'));
+            return;
         }
 
-        if (!$parent) {
-            $parent = Category::findOne(1);
-        }
+        $parent = self::findOne($this->$attribute);
 
-        if (!$parent) {
-            throw new \yii\base\InvalidParamException();
-        }
-
-        $this->appendTo($parent);
-
-        try {
-            return parent::save($runValidation, $attributeNames);
-        } catch (yii\base\Exception $exc) {
-            \Yii::$app->session->setFlash('error', $exc->getMessage());
+        if ($parent->parent_id) {
+            $this->addError($attribute, Yii::t('yee', 'Subcategory cannot be a parent of another category.'));
         }
     }
 
@@ -156,26 +133,54 @@ class Category extends ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasOne(self::className(), ['parent_id' => 'id']);
+    }
+
+    /**
      * Return all categories.
      *
      * @param bool $asArray
      *
      * @return static[]
      */
-    public static function getCategories($skipCategories = [])
+    public static function getCategories()
     {
         $result = [];
-        $categories = Category::findOne(1)->getDescendants()->joinWith('translations')->all();
+
+        $categories = Category::find()->visible()->joinWith('translations')->orderBy(['title' => SORT_ASC])->all();
+
+        $children = [];
 
         foreach ($categories as $category) {
-            if (!in_array($category->id, $skipCategories)) {
-                $result[$category->id] = str_repeat('   ', ($category->depth - 1)) . $category->title;
+            if ($category->parent_id) {
+                $children[$category->parent_id][] = $category;
+            }
+        }
+
+
+        foreach ($categories as $category) {
+            if (!$category->parent_id) {
+                $result[$category->id] = $category->title;
+
+                if (isset($children[$category->id])) {
+                    foreach ($children[$category->id] as $child) {
+                        $result[$child->id] = '   ' . $child->title;
+                    }
+                }
             }
         }
 
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     * @return \yeesoft\post\models\CategoryQuery
+     */
     public static function find()
     {
         return new CategoryQuery(get_called_class());

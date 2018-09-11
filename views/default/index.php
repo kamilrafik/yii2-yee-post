@@ -12,10 +12,11 @@ use yeesoft\post\models\Post;
 /* @var $dataProvider yeesoft\data\ActiveDataProvider */
 
 $this->title = Yii::t('yee/post', 'Posts');
-$this->params['description'] = 'list of posts';
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary'])
-        . Html::a(Yii::t('yee/media', 'Categories'), ['category/index'], ['class' => 'btn btn-sm btn-primary']);
+$this->params['actions'] = [
+    Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']),
+    Html::a(Yii::t('yee/media', 'Categories'), ['category/index'], ['class' => 'btn btn-sm btn-primary'])
+];
 ?>
 
 <div class="box box-primary">
@@ -41,34 +42,34 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], 
                 ],
             ],
             'columns' => [
-                ['class' => 'yeesoft\grid\CheckboxColumn', 'options' => ['style' => 'width:10px'], 'displayFilter' => false],
-                [
+                    ['class' => 'yeesoft\grid\CheckboxColumn', 'options' => ['style' => 'width:10px'], 'displayFilter' => false],
+                    [
                     'class' => 'yeesoft\grid\columns\TitleActionColumn',
-                    'title' => function (Post  $model) {
+                    'title' => function (Post $model) {
                         return Html::a($model->title, ['view', 'id' => $model->id], ['data-pjax' => 0]);
                     },
                     'filterOptions' => ['colspan' => 2],
                 ],
-                [
+                    [
                     'attribute' => 'created_by',
                     'filter' => User::getUsersList(),
-                    'value' => function (Post  $model) {
+                    'value' => function (Post $model) {
                         return Html::a($model->author->username, ['/user/default/update', 'id' => $model->created_by], ['data-pjax' => 0]);
                     },
                     'format' => 'raw',
                     'visible' => Yii::$app->user->can('view-users'),
                     'options' => ['style' => 'width:180px'],
                 ],
-                [
+                    [
                     'class' => 'yeesoft\grid\columns\StatusColumn',
                     'attribute' => 'status',
                     'optionsArray' => Post ::getStatusOptionsList(),
                     'options' => ['style' => 'width:60px'],
                 ],
-                [
+                    [
                     'class' => 'yeesoft\grid\columns\DateFilterColumn',
                     'attribute' => 'published_at',
-                    'value' => function (Post  $model) {
+                    'value' => function (Post $model) {
                         return '<span style="font-size:85%;" class="label label-'
                                 . ((time() >= $model->published_at) ? 'primary' : 'default') . '">'
                                 . $model->publishedDate . '</span>';

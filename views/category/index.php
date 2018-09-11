@@ -12,8 +12,7 @@ use yeesoft\post\models\Category;
 $this->title = Yii::t('yee/media', 'Categories');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('yee/post', 'Posts'), 'url' => ['default/index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['description'] = 'List of Post Categories';
-$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']);
+$this->params['actions'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']);
 ?>
 <div class="box box-primary">
     <div class="box-body">
@@ -38,12 +37,7 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], 
                 [
                     'attribute' => 'parent_id',
                     'value' => function (Category $model) {
-
-                        if ($parent = $model->getParent()->one() AND $parent->id > 1) {
-                            return Html::a($parent->title, ['update', 'id' => $parent->id], ['data-pjax' => 0]);
-                        } else {
-                            return '<span class="not-set">' . Yii::t('yii', '(not set)') . '</span>';
-                        }
+                        return ($model->parent) ? $model->parent->title : '<span class="not-set">' . Yii::t('yii', '(not set)') . '</span>';
                     },
                     'format' => 'raw',
                     'filter' => Category::getCategories(),

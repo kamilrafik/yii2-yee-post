@@ -30,6 +30,15 @@ class CategorySearch extends Category
     {
         return '';
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+        $this->visible = null;
+    }
 
     /**
      * @inheritdoc
@@ -72,19 +81,13 @@ class CategorySearch extends Category
         $query->andFilterWhere([
             'id' => $this->id,
             'visible' => $this->visible,
+            'parent_id' => $this->parent_id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-        ]);
-
-        if (isset($this->parent_id) && $this->parent_id > 1) {
-            $parent = Category::findOne((int) $this->parent_id);
-            $query->andWhere(['>', 'left_border', $parent->left_border]);
-            $query->andWhere(['<', 'right_border', $parent->right_border]);
-        }
-
-        $query->andFilterWhere(['like', 'slug', $this->slug])
+        ])
+        ->andFilterWhere(['like', 'slug', $this->slug])
                 ->andFilterWhere(['like', 'title', $this->title])
                 ->andFilterWhere(['like', 'description', $this->description]);
 

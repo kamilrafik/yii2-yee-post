@@ -3,7 +3,6 @@
 namespace yeesoft\post\models;
 
 use yeesoft\multilingual\db\MultilingualTrait;
-use paulzi\nestedintervals\NestedIntervalsQueryTrait;
 
 
 /**
@@ -15,7 +14,6 @@ class CategoryQuery extends \yii\db\ActiveQuery
 {
 
     use MultilingualTrait;
-    use NestedIntervalsQueryTrait;
 
     /**
      * @inheritdoc
@@ -33,6 +31,11 @@ class CategoryQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+    
+    public function visible()
+    {
+        return $this->andWhere(['visible' => 1]);
     }
 
 }
