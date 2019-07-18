@@ -36,6 +36,7 @@ use yeesoft\post\models\Tag;
                         <?php endif; ?>
 
                         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'detailed_title')->textInput(['maxlength' => true]) ?>
 
                         <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
                         

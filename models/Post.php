@@ -85,7 +85,7 @@ class Post extends ActiveRecord implements OwnerAccess
                 'langForeignKey' => 'post_id',
                 'tableName' => "{{%post_lang}}",
                 'attributes' => [
-                    'title', 'content',
+                    'title', 'content, detailed_title',
                 ]
             ],
         ];
@@ -97,9 +97,9 @@ class Post extends ActiveRecord implements OwnerAccess
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title', 'detailed_title'], 'required'],
             [['created_by', 'updated_by', 'status', 'comment_status', 'revision', 'category_id'], 'integer'],
-            [['title', 'content', 'view', 'layout'], 'string'],
+            [['title', 'detailed_title', 'content', 'view', 'layout'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['slug'], 'string', 'max' => 127],
             [['thumbnail'], 'string', 'max' => 255],
