@@ -121,6 +121,7 @@ class Post extends ActiveRecord implements OwnerAccess
             'view' => Yii::t('yee', 'View'),
             'layout' => Yii::t('yee', 'Layout'),
             'title' => Yii::t('yee', 'Title'),
+            'detailed_title' => Yii::t('yee', 'Detailed Title'),
             'status' => Yii::t('yee', 'Status'),
             'comment_status' => Yii::t('yee', 'Comment Status'),
             'content' => Yii::t('yee', 'Content'),
