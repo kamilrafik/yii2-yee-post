@@ -85,7 +85,7 @@ class Post extends ActiveRecord implements OwnerAccess
                 'langForeignKey' => 'post_id',
                 'tableName' => "{{%post_lang}}",
                 'attributes' => [
-                    'title', 'content, detailed_title',
+                    'title', 'content', 'detailed_title'
                 ]
             ],
         ];
