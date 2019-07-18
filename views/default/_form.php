@@ -39,7 +39,10 @@ use yeesoft\post\models\Tag;
 
                         <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
                         
-                        <?= $form->field($model, 'tagValues')->widget(MagicSuggest::className(), ['items' => Tag::getTags()]); ?>
+                        <?php
+                        // todo: it is broken; so, we temporarily disable it to make wysiwyg working
+                        // $form->field($model, 'tagValues')->widget(MagicSuggest::className(), ['items' => Tag::getTags()]);
+                        ?>
 
                         <?= $form->field($model, 'content')->widget(TinyMce::className()); ?>
 
